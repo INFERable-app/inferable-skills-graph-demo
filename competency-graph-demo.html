@@ -356,7 +356,7 @@
     // Shared configuration for xAPI LRS and BKT endpoints
     const CONFIG = {
       xapi: {
-        endpoint: "http://146.190.70.120:8080/xapi/",
+        endpoint: "https://146.190.70.120:8080/xapi/",
         credentials: "8d17bca86ccfd3bf25897a70f01846dfbe621f2ff9ddb28c58c60a467aeaf6b1:37b661e683780adb9a76262b310dee32cb6413553da613a7a13621675877bb59"
       },
       bkt: {
@@ -748,7 +748,31 @@
             // Log the node we're fetching BKT for
             console.log(`Fetching BKT prediction for node: ${node['scd:referenceCode']} (${nodeId})`);
             
-            const userId = 'https://example.com/users/user-v1:1abcb33beeb811dca15f0ac3e47b887b';
+            // Get the current actor from xAPI statements
+            const actor = ADL.XAPIWrapper.lrs.actor;
+            if (!actor) {
+                console.error('No xAPI actor found - cannot fetch BKT predictions');
+                continue;
+            }
+            
+            // Convert xAPI actor to user_id format
+            let userId;
+            if (actor.mbox) {
+                // Use mbox as identifier
+                userId = actor.mbox;
+            } else if (actor.openid) {
+                // Use openid as identifier
+                userId = actor.openid;
+            } else if (actor.account && actor.account.homePage && actor.account.name) {
+                // Use account as identifier
+                userId = `${actor.account.homePage}/users/${actor.account.name}`;
+            } else {
+                console.error('Actor missing required identifier (mbox, openid, or account):', actor);
+                continue;
+            }
+            
+            console.log('Using actor for BKT predictions:', { actor, userId });
+            
             // Split credentials into auth_id and auth_secret
             const [authId, authSecret] = CONFIG.xapi.credentials.split(':');
             const params = {
