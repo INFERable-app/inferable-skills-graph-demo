@@ -793,9 +793,12 @@
               method: 'POST',
               headers: {
                 ...CONFIG.bkt.headers,
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Origin': 'https://jgoodell2.github.io'
               },
               body: JSON.stringify(params),
+              mode: 'cors',
+              credentials: 'include',
               cache: 'no-store'
             });
             console.log('BKT API Response status:', resp.status, resp.statusText);
