@@ -782,7 +782,7 @@
               auth_id: authId,
               auth_secret: authSecret
             };
-            const url = `${CONFIG.bkt.endpoint}` + '?' + new URLSearchParams(params).toString();
+            const url = `${CONFIG.bkt.endpoint}`;
             console.log('BKT API Request:', {
               url,
               headers: CONFIG.bkt.headers,
@@ -790,7 +790,12 @@
             });
             
             const resp = await fetch(url, {
-              headers: CONFIG.bkt.headers,
+              method: 'POST',
+              headers: {
+                ...CONFIG.bkt.headers,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(params),
               cache: 'no-store'
             });
             console.log('BKT API Response status:', resp.status, resp.statusText);
