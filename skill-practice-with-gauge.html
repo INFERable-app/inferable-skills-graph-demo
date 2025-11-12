@@ -2,12 +2,15 @@
 <html>
 <head>
   <title>Skill Practice: Proportional Relationships</title>
-  <!-- percent-gauge webcomponent -->
-  <script src="https://jgoodell2.github.io/itemGen/webComponents/percentGauge.js" type="module"></script>
   <script src="js/cryptojs_v3.1.2.js"></script>
   <script src="js/xAPIWrapper.js"></script>
   <script src="js/jimsxapiwrapper.js"></script>
+  <!-- percent-gauge webcomponent -->
+  <script src="https://jgoodell2.github.io/itemGen/webComponents/percentGauge.js" type="module"></script>
   <style>
+    :root { box-sizing: border-box; }
+    * { box-sizing: inherit; }
+    html, body { height: 100%; margin: 0; font-family: Arial, sans-serif; }
     .split-container {
       display: flex;
       width: 100%;
@@ -17,6 +20,8 @@
       flex: 2;
       padding: 20px;
       border-right: 1px solid #ccc;
+      background: #f4f6f8;
+      overflow: auto;
     }
     .right-pane {
       flex: 1;
@@ -24,7 +29,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      background: #f8f9fa;
+      overflow: auto;
     }
+    #divBackground { width: 100%; padding: 16px; background: #133b61; }
+    #divActivity { margin: auto; width: 100%; background: #fff; padding: 10px; border-radius: 4px; height: auto; display: inline-block; }
     i {color: blue;}
     span.frac {display: inline-block; text-align: center; vertical-align: middle;}
     span.frac > sup, span.frac > sub {display: block; font: inherit; padding: 0 0.3em;}
@@ -35,10 +44,12 @@
     #hintLabel {padding: 8px; width: 20px; background-color: #dddddd; text-align:center;}
     #hint1, #hint2, #hint3, #hint4, #hint5, #hint6, #div-correct-feedback, #div-decimal-feedback {visibility: hidden;}
     #feedback {color: blue; background-color: white; text-align: left; padding: 8px;}
+    button { cursor: pointer; }
     .gauge-container {
       width: 200px;
       height: 200px;
       margin-top: 20px;
+      display: block;
     }
     .skill-label {
       text-align: center;
