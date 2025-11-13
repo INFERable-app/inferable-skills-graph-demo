@@ -4,6 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Conflict Resolution Practice — The Marketing Budget Battle</title>
+<script src="https://jgoodell2.github.io/itemGen/webComponents/percentGauge.js" type="module"></script>
 <style>
   :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;sans-serif;color:#111}
   body{margin:0;padding:24px;max-width:900px;margin-left:auto;margin-right:auto;background:#f7f8fb}
@@ -54,22 +55,16 @@
     <div id="feedbackArea"></div>
   </div>
 
-  <div class="card">
+  <div class="card" style="visibility: hidden;">
     <h3>xAPI Statement Log (for debugging)</h3>
     <div class="log" id="logArea"></div>
-    <div style="margin-top:12px">
-      <strong>Prediction</strong>
-      <div id="predictionContainer" style="margin-top:8px;display:flex;align-items:center;gap:12px">
-        <div id="predictionGaugeWrap" style="width:160px;background:#e6eef8;border-radius:8px;padding:6px;">
-          <div id="predictionGauge" style="height:20px;background:#2b6cb0;width:0%;border-radius:6px;text-align:center;color:white;font-size:12px;line-height:20px">0%</div>
-        </div>
-        <div><small id="predictionText">No prediction yet</small></div>
-      </div>
-    </div>
     <footer>AU generates xAPI statements (initialized, answered, completed). You can configure an LRS to receive them.</footer>
   </div>
 </div>
 
+<script src="../js/cryptojs_v3.1.2.js"></script>
+<script src="../js/xAPIWrapper.js"></script>
+<script src="../js/jimsxapiwrapper.js"></script>
 <script>
 /*
   Simple xAPI statement sender. If LRS configured (endpoint + basic auth), sends statement via fetch.
@@ -85,8 +80,8 @@ function log(msg){
 function getConfig(){
   const urlParams = new URLSearchParams(window.location.search);
   return {
-    endpoint: urlParams.get('endpoint') || '',
-    auth: urlParams.get('auth') || '',
+    endpoint: 'http://146.190.70.120:8080/xapi/' || urlParams.get('endpoint') || '',
+    auth: "8d17bca86ccfd3bf25897a70f01846dfbe621f2ff9ddb28c58c60a467aeaf6b1:37b661e683780adb9a76262b310dee32cb6413553da613a7a13621675877bb59" ||urlParams.get('auth') || '',
     registration: urlParams.get('registration') || '',
     grouping: urlParams.get('grouping') || '',
     activity_id: urlParams.get('activity_id') || 'urn:uuid:marketing-budget-battle-au'
@@ -97,21 +92,45 @@ function getConfig(){
 async function sendStatement(stmt){
   const cfg = getConfig();
   const body = JSON.stringify(stmt);
+  console.log('===== SEND STATEMENT =====');
+  console.log('Statement Verb:', stmt.verb?.display?.['en-US'] || 'unknown');
+  console.log('Full config:', {endpoint: cfg.endpoint, auth: cfg.auth ? '[REDACTED]' : 'none', registration: cfg.registration, grouping: cfg.grouping, activity_id: cfg.activity_id});
+  console.log('Statement payload:', stmt);
+
+  // Prefer using ADL.XAPIWrapper when available (aligns behavior with skill-practice-with-gauge)
+  if (window.ADL && ADL.XAPIWrapper && typeof ADL.XAPIWrapper.changeConfig === 'function') {
+    try {
+      const authVal = cfg.auth && !cfg.auth.startsWith('Basic ') ? ('Basic ' + (typeof toBase64 === 'function' ? toBase64(cfg.auth) : btoa(cfg.auth))) : (cfg.auth || '');
+      const xapiConf = { endpoint: cfg.endpoint, auth: authVal };
+      console.log('Using ADL.XAPIWrapper with config:', xapiConf);
+      ADL.XAPIWrapper.changeConfig(xapiConf);
+      try {
+        const wrapperResult = ADL.XAPIWrapper.sendStatement(stmt);
+        log('Statement sent to LRS via ADL.XAPIWrapper: ' + (stmt.verb && stmt.verb.display ? stmt.verb.display['en-US'] : 'unknown'));
+        console.log('ADL.XAPIWrapper result:', wrapperResult);
+      } catch (werr) {
+        console.warn('ADL.XAPIWrapper.sendStatement failed, falling back to fetch. Error:', werr);
+        // fall through to fetch fallback below
+        throw werr;
+      }
+      return;
+    } catch (err) {
+      console.warn('ADL wrapper flow failed, will attempt manual fetch fallback:', err);
+    }
+  }
+
+  // Manual fetch fallback (kept for environments without ADL.XAPIWrapper)
   if(cfg.endpoint){
     try{
-      // Console-level debug: show full endpoint/auth/params and the statement payload
       console.log('xAPI send - endpoint:', cfg.endpoint,
-                  'auth:', cfg.auth,
+                  'auth:', cfg.auth ? '[REDACTED]' : 'none',
                   'registration:', cfg.registration,
                   'grouping:', cfg.grouping,
                   'activity_id:', cfg.activity_id);
-      console.log('xAPI statement payload:', stmt);
-      // On-page log: redact auth for display
       log('Sending statement to LRS endpoint: ' + cfg.endpoint + ' auth=' + (cfg.auth ? '[REDACTED]' : '') + ' registration=' + cfg.registration + ' grouping=' + cfg.grouping + ' activity_id=' + cfg.activity_id);
 
-      const headers = {"Content-Type":"application/json"};
+      const headers = {"Content-Type":"application/json", "Accept": "application/json", "X-Experience-API-Version": "1.0.3"};
       if(cfg.auth){
-        // Allow user to provide username:password and we convert to Basic
         if(!cfg.auth.startsWith('Basic ')){
           headers['Authorization'] = 'Basic ' + btoa(cfg.auth);
         } else {
@@ -120,10 +139,14 @@ async function sendStatement(stmt){
       }
       const res = await fetch(cfg.endpoint + 'statements', {method: 'POST', headers, body, mode:'cors'});
       if(!res.ok){
-        log('Failed to send statement to LRS: HTTP ' + res.status + ' — stored locally.');
+        const text = await res.text().catch(() => null);
+        log('Failed to send statement to LRS: HTTP ' + res.status + (text ? (' — ' + text) : '') + ' — stored locally.');
+        console.error('LRS response body:', text);
         storeStatementLocally(stmt);
       } else {
+        const text = await res.text().catch(() => null);
         log('Statement sent to LRS: ' + (stmt.verb && stmt.verb.display ? stmt.verb.display['en-US'] : 'unknown'));
+        console.log('✓ Statement successfully sent to LRS; response:', text);
       }
     }catch(err){
       log('Error sending to LRS: ' + err + ' — stored locally.');
@@ -131,8 +154,10 @@ async function sendStatement(stmt){
       storeStatementLocally(stmt);
     }
   } else {
+    console.log('No LRS endpoint configured, storing locally');
     storeStatementLocally(stmt);
   }
+  console.log('=======================');
 }
 
 function storeStatementLocally(stmt){
@@ -142,79 +167,147 @@ function storeStatementLocally(stmt){
   log('Statement stored locally: ' + (stmt.verb && stmt.verb.display ? stmt.verb.display['en-US'] : 'unknown'));
 }
 
-async function getPrediction() {
-  // Get configuration and ensure actor is populated
+// Hard-coded competency and activity IDs for AU
+const COMPETENCY_ID = 'urn:uuid:marketing-budget-battle-au_competency';
+const ACTIVITY_ID = 'urn:uuid:marketing-budget-battle-au_activity';
+
+// Helper to extract BKT parameters consistently for both statements and predictions
+function getBKTParams() {
   const cfg = getConfig();
   ensureActor();
 
-  // Derive a simple user identifier string from ACTOR
+  // Derive user_id from ACTOR
   let userId = null;
   if (typeof ACTOR === 'string') {
     userId = ACTOR;
   } else if (ACTOR && ACTOR.mbox) {
-    userId = ACTOR.mbox; // e.g. 'mailto:alice@example.com'
+    userId = ACTOR.mbox;
   } else if (ACTOR && ACTOR.openid) {
     userId = ACTOR.openid;
   } else if (ACTOR && ACTOR.account && ACTOR.account.homePage && ACTOR.account.name) {
     userId = `${ACTOR.account.homePage}/users/${ACTOR.account.name}`;
   } else if (ACTOR && ACTOR.name) {
-    // last-resort fallback to a name string
     userId = ACTOR.name;
   } else {
-    console.error('getPrediction: unable to determine user identifier from ACTOR', ACTOR);
+    console.error('getBKTParams: unable to determine user identifier from ACTOR', ACTOR);
     return null;
   }
 
-  const CONFIG = {
-    xapi: {
-      endpoint: cfg.endpoint,
-      credentials: cfg.auth || ''
-    },
-    bkt: {
-      endpoint: 'https://bkt.inferable.rest',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': 'your-bkt-api-key'
-      }
-    }
-  };
-
-  // Extract auth_id and auth_secret. If credentials are Basic <base64>, decode first.
-  let credentials = CONFIG.xapi.credentials || '';
+  // Extract auth_id and auth_secret from credentials
+  let credentials = cfg.auth || '';
   if (credentials.startsWith('Basic ')) {
     try {
-      // atob is available in browsers
       const decoded = atob(credentials.slice(6));
       credentials = decoded;
     } catch (e) {
-      console.warn('getPrediction: failed to base64-decode Basic auth; using raw credentials', e);
+      console.warn('getBKTParams: failed to base64-decode Basic auth; using raw credentials', e);
     }
   }
-
   const [authId = '', authSecret = ''] = (credentials || '').split(':');
 
-
-  // Always lowercase competency_id for BKT compatibility
-  let competencyId = (cfg.activity_id || 'urn:uuid:marketing-budget-battle-au').toLowerCase();
-  const params = {
+  return {
+    competency_id: COMPETENCY_ID,
     user_id: userId,
-    competency_id: competencyId,
     lrs_url: cfg.endpoint,
     auth_id: authId,
     auth_secret: authSecret
   };
+}
+
+// send_statement function matching skill-practice-with-gauge.html pattern
+function send_statement(item, competency, response, success) {
+  const actor = ensureActor();
+
+  const verb = {
+    "id": "http://adlnet.gov/expapi/verbs/answered",
+    "display": { "en-US": "answered" }
+  };
+
+  const object = {
+    "id": ACTIVITY_ID,
+    "objectType": "Activity",
+    "definition": {
+      "name": { "en-US": "Conflict Resolution Practice — The Marketing Budget Battle" },
+      "description": { "en-US": "Practice item for conflict resolution" },
+      "type": "http://adlnet.gov/expapi/activities/question"
+    }
+  };
+
+  const result = {
+    "response": response,
+    "success": success,
+    "score": { "scaled": success ? 1.0 : 0.0 }
+  };
+
+  const context = {
+    "contextActivities": {
+      "category": [{
+        "id": competency || COMPETENCY_ID,
+        "objectType": "Activity",
+        "definition": {
+          "name": { "en-US": "Conflict Resolution Competency" },
+          "type": "http://adlnet.gov/expapi/activities/competency"
+        }
+      }]
+    }
+  };
+
+  const statement = {
+    "actor": actor,
+    "verb": verb,
+    "object": object,
+    "result": result,
+    "context": context,
+    "timestamp": new Date().toISOString()
+  };
+
+  try {
+    const result = ADL.XAPIWrapper.sendStatement(statement);
+    console.log('Statement sent via ADL.XAPIWrapper:', result);
+  } catch (error) {
+    console.error('Error sending statement:', error);
+    // Fallback to sendStatement function defined above
+    sendStatement(statement);
+  }
+}
+
+async function getPrediction() {
+  // Use the same BKT parameters as send_statement
+  const params = getBKTParams();
+  if (!params) {
+    console.error('getPrediction: failed to get BKT parameters');
+    return null;
+  }
+
+  console.log('getPrediction: using params:', { 
+    competency_id: params.competency_id, 
+    user_id: params.user_id, 
+    lrs_url: params.lrs_url, 
+    auth_id: params.auth_id ? '[REDACTED]' : '', 
+    auth_secret: params.auth_secret ? '[REDACTED]' : '' 
+  });
+
+  const CONFIG = {
+    bkt: {
+      endpoint: 'https://bkt.inferable.rest',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    }
+  };
 
   const url = `${CONFIG.bkt.endpoint}` + '?' + new URLSearchParams(params).toString();
-  console.log('BKT API Request:', { url, headers: CONFIG.bkt.headers, params });
+  console.log('BKT API GET fallback URL:', url);
 
   // Prefer POST flow: attempt to POST JSON to the BKT root endpoint first
   try {
     const postBody = {
-      user_id: userId,
-      competency_id: competencyId,
-      lrs_url: cfg.endpoint,
-      auth_id: authId,
-      auth_secret: authSecret
+      user_id: params.user_id,
+      competency_id: params.competency_id,
+      lrs_url: params.lrs_url,
+      auth_id: params.auth_id,
+      auth_secret: params.auth_secret
     };
 
     const postUrl = CONFIG.bkt.endpoint.replace(/\/$/, '') + '/';
@@ -233,7 +326,7 @@ async function getPrediction() {
       if (postResp.ok) {
         const json = await postResp.json().catch(err => { console.error('Failed to parse BKT POST JSON', err); return null; });
         console.log('BKT POST JSON:', json);
-        if (json && (json.prediction !== undefined)) updatePredictionUI(json.prediction);
+        if (json && (json.prediction !== undefined)) updateCompletionGauge(json.prediction);
         return json;
       } else {
         console.warn('BKT POST not OK, falling back. Status:', postResp.status);
@@ -246,7 +339,7 @@ async function getPrediction() {
 
     // If POST to root did not succeed, fall back to token exchange / predict or legacy GET
     let token = null;
-    if (authId && authSecret) {
+    if (params.auth_id && params.auth_secret) {
       try {
         const tokenUrl = CONFIG.bkt.endpoint.replace(/\/$/, '') + '/token';
         console.log('Requesting token from', tokenUrl);
@@ -254,7 +347,7 @@ async function getPrediction() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Basic ' + btoa(authId + ':' + authSecret)
+            'Authorization': 'Basic ' + btoa(params.auth_id + ':' + params.auth_secret)
           },
           body: JSON.stringify({ grant_type: 'client_credentials' }),
           cache: 'no-store'
@@ -274,7 +367,7 @@ async function getPrediction() {
     if (token) {
       // POST a prediction request with the token to /predict
       const predictUrl = CONFIG.bkt.endpoint.replace(/\/$/, '') + '/predict';
-      const predictBody = { user_id: userId, lrs_url: cfg.endpoint, activity_id: cfg.activity_id, competency_id: competencyId };
+      const predictBody = { user_id: params.user_id, lrs_url: params.lrs_url, activity_id: ACTIVITY_ID, competency_id: params.competency_id };
       console.log('POSTing prediction to', predictUrl, predictBody);
       const predResp = await fetch(predictUrl, {
         method: 'POST',
@@ -290,7 +383,7 @@ async function getPrediction() {
         const json = await predResp.json().catch(err => { console.error('Failed to parse prediction JSON', err); return null; });
         console.log('Prediction POST JSON:', json);
         if (json && (json.prediction !== undefined)) {
-          updatePredictionUI(json.prediction);
+          updateCompletionGauge(json.prediction);
         }
         return json;
       }
@@ -314,7 +407,7 @@ async function getPrediction() {
       return null;
     });
     console.log('BKT API Response JSON:', json);
-    if (json && (json.prediction !== undefined)) updatePredictionUI(json.prediction);
+    if (json && (json.prediction !== undefined)) updateCompletionGauge(json.prediction);
     return json;
   } catch (err) {
     console.error('getPrediction fetch error', err);
@@ -322,17 +415,13 @@ async function getPrediction() {
   }
 }
 
-// Update small prediction UI
-function updatePredictionUI(pred) {
+// Update full gauge in completion screen
+function updateCompletionGauge(pred) {
   const pct = Math.max(0, Math.min(1, Number(pred || 0)));
-  const percentText = Math.round(pct * 100) + '%';
-  const gauge = document.getElementById('predictionGauge');
-  const txt = document.getElementById('predictionText');
+  const gauge = document.getElementById('completionGauge');
   if (gauge) {
-    gauge.style.width = (pct * 100) + '%';
-    gauge.textContent = percentText;
+    gauge.setAttribute('gauge-value-decimal', pct.toString());
   }
-  if (txt) txt.textContent = 'Predicted success: ' + percentText;
 }
 
 // Utility: create basic actor for demo. In cmi5 this would typically come from LMS.
@@ -350,7 +439,7 @@ function ensureActor(){
     }
   }
   if(!ACTOR) {
-    ACTOR = { "objectType":"Agent", "name":"Default Learner", "mbox":"mailto:learner@example.com" };
+    ACTOR = { "objectType":"Agent", "name":"Default Learner", "openid":"https://example.com/users/user-v1:1abcb33beeb811dca15f0ac3e47b887b" };
   }
   return ACTOR;
 }
@@ -362,6 +451,7 @@ function makeStatement(verbId, verbDisplay, objectId, objectDef){
     actor: ensureActor(),
     verb: { id: verbId, display: {"en-US": verbDisplay} },
     object: {
+      objectType: "Activity",
       id: objectId.startsWith('urn:uuid:marketing-budget-battle:') ? objectId : config.activity_id,
       definition: Object.assign({
         name: {"en-US": "Conflict Resolution Practice — The Marketing Budget Battle"},
@@ -369,17 +459,45 @@ function makeStatement(verbId, verbDisplay, objectId, objectDef){
         type: "http://adlnet.gov/expapi/activities/assessment"
       }, objectDef || {})
     },
-    context: {
-      registration: config.registration
-    },
+    context: {},
     timestamp: (new Date()).toISOString()
   };
+
+  // Only include registration if it's a valid non-empty value (must be a UUID)
+  if (config.registration && config.registration.trim() !== '') {
+    statement.context.registration = config.registration;
+  }
 
   // Add grouping if provided
   if (config.grouping && config.grouping !== '|') {
     statement.context.contextActivities = {
       grouping: [{ id: config.grouping }]
     };
+  }
+
+  // Ensure context.contextActivities exists and include the competency as a category
+  const competencyId = 'urn:uuid:marketing-budget-battle-au_competency';
+  statement.context.contextActivities = statement.context.contextActivities || {};
+  // Add category entry for competency
+  statement.context.contextActivities.category = statement.context.contextActivities.category || [];
+  // Avoid duplicating the competency id if already present
+  if (!statement.context.contextActivities.category.some(c => c && c.id === competencyId)) {
+    statement.context.contextActivities.category.unshift({
+      id: competencyId,
+      objectType: 'Activity',
+      definition: {
+        name: { 'en-US': 'Conflict Resolution Competency' },
+        type: 'http://adlnet.gov/expapi/activities/competency'
+      }
+    });
+  }
+
+  // Preserve grouping if provided in config
+  if (config.grouping && config.grouping !== '|') {
+    statement.context.contextActivities.grouping = statement.context.contextActivities.grouping || [];
+    if (!statement.context.contextActivities.grouping.some(g => g && g.id === config.grouping)) {
+      statement.context.contextActivities.grouping.unshift({ id: config.grouping });
+    }
   }
 
   return statement;
@@ -495,6 +613,15 @@ document.getElementById('submitAnswer').addEventListener('click', async ()=>{
   fb.innerHTML = `<div class="feedback"><strong>Feedback — ${choice.correct ? "Correct" : "Incorrect"}</strong><p>${choice.feedback}</p></div>`;
   document.getElementById('submitAnswer').style.display = 'none';
   document.getElementById('nextBtn').style.display = 'inline-block';
+  
+  // Console logging for answered event
+  console.log('========== ANSWERED EVENT ==========');
+  console.log('Step ID:', step.id);
+  console.log('Step Title:', step.title);
+  console.log('Selected Choice:', chosen);
+  console.log('Choice Text:', choice.text);
+  console.log('Is Correct:', choice.correct);
+  
   // record answered statement
   const ansStmt = makeStatement(
     "http://adlnet.gov/expapi/verbs/answered",
@@ -514,6 +641,14 @@ document.getElementById('submitAnswer').addEventListener('click', async ()=>{
     completion: false,
     duration: "PT0S"
   };
+  
+  console.log('xAPI Statement Object:', ansStmt);
+  console.log('Actor:', ansStmt.actor);
+  console.log('Verb:', ansStmt.verb);
+  console.log('Object ID:', ansStmt.object.id);
+  console.log('Result:', ansStmt.result);
+  console.log('====================================');
+  
   await sendStatement(ansStmt);
   log('Answered ' + step.id + ': ' + chosen + ' (success: ' + !!choice.correct + ')');
   // request an updated prediction after answering (non-blocking)
@@ -526,9 +661,23 @@ document.getElementById('nextBtn').addEventListener('click', async ()=>{
   if(current >= steps.length){
     // completed
     document.getElementById('status').textContent = 'Completed';
-    document.getElementById('stepCard').innerHTML = '<h2>Exercise complete</h2><p>Well done — you completed the Conflict Resolution Practice Exercise.</p>';
-    // Add gague here
-     document.getElementById('stepCard').innerHTML += '<p>Fetching your skill prediction from the BKT model...</p>';
+    document.getElementById('stepCard').innerHTML = `
+      <h2>Exercise Complete</h2>
+      <p>Well done — you completed the Conflict Resolution Practice Exercise.</p>
+      <h3>Your Mastery Progress</h3>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-top: 20px;">
+        <div style="width: 200px; height: 200px; display: block;">
+          <percent-gauge id="completionGauge" gauge-band-color="green" gauge-value-decimal="0.0"></percent-gauge>
+        </div>
+        <div style="text-align: center; font-size: 14px; font-weight: bold;">
+          Conflict Resolution Competency
+        </div>
+        <div style="text-align: center; color: #555; max-width: 400px;">
+          This gauge shows your predicted mastery level based on your responses and xAPI learning data.
+        </div>
+      </div>
+    `;
+    // Fetch prediction and update gauge
     await getPrediction();
     // completed statement  
     const compStmt = makeStatement("http://adlnet.gov/expapi/verbs/completed","completed","urn:uuid:marketing-budget-battle:au");
