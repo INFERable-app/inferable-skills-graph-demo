@@ -819,7 +819,7 @@
             };
             
             // Validate prediction value and use default if invalid
-            let predictionValue = json.prediction;
+            let predictionValue = json.learnerStateValue; //from learnerState object payload
             if (predictionValue === undefined || predictionValue === null || isNaN(predictionValue)) {
               predictionValue = 0.01; // Default to 1% if no valid prediction
               console.warn(`No valid prediction for ${node['scd:referenceCode']}, using default 0.01`);
