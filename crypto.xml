@@ -1,0 +1,722 @@
+<quiz>
+<question type="shortanswer">
+<name>
+<text>Anagram Cipher Task 1: Decode the Message</text>
+</name>
+<questiontext format="html">
+<text>
+<![CDATA[ <p>The following message has been encrypted with a anagram cipher:</p> <blockquote>PPAEL</blockquote> <p>What is the original message?</p> ]]>
+</text>
+</questiontext>
+<answer fraction="100">
+<text>APPLE</text>
+<feedback>
+<text>Correct! Rearranging the letters in the message reveals "APPLE".</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text>PPAEL</text>
+<feedback>
+<text>That's the encrypted message. You need to find the original (hidden) message!</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text/>
+<feedback>
+<text>Sorry, that's not correct. Try again!</text>
+</feedback>
+</answer>
+<tags>
+<tag>
+<text>CRYPTO-SKILL</text>
+</tag>
+<tag>
+<text>CRYPTO-ANAGRAM</text>
+</tag>
+</tags>
+</question>
+<question type="shortanswer">
+<name>
+<text>Anagram Cipher Task 2: Decode the Message</text>
+</name>
+<questiontext format="html">
+<text>
+<![CDATA[ <p>The following message has been encrypted with a anagram cipher:</p> <blockquote>NAIBR</blockquote> <p>What is the original message?</p> ]]>
+</text>
+</questiontext>
+<answer fraction="100">
+<text>BRAIN</text>
+<feedback>
+<text>Correct! Rearranging the letters in the message reveals "BRAIN".</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text>NAIBR</text>
+<feedback>
+<text>That's the encrypted message. You need to find the original (hidden) message!</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text/>
+<feedback>
+<text>Sorry, that's not correct. Try again!</text>
+</feedback>
+</answer>
+<tags>
+<tag>
+<text>CRYPTO-SKILL</text>
+</tag>
+<tag>
+<text>CRYPTO-ANAGRAM</text>
+</tag>
+</tags>
+</question>
+<question type="shortanswer">
+<name>
+<text>Anagram Cipher Task 3: Decode the Message</text>
+</name>
+<questiontext format="html">
+<text>
+<![CDATA[ <p>The following message has been encrypted with a anagram cipher:</p> <blockquote>EHPIRC</blockquote> <p>What is the original message?</p> ]]>
+</text>
+</questiontext>
+<answer fraction="100">
+<text>CIPHER</text>
+<feedback>
+<text>Correct! Rearranging the letters in the message reveals "CIPHER".</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text>EHPIRC</text>
+<feedback>
+<text>That's the encrypted message. You need to find the original (hidden) message!</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text/>
+<feedback>
+<text>Sorry, that's not correct. Try again!</text>
+</feedback>
+</answer>
+<tags>
+<tag>
+<text>CRYPTO-SKILL</text>
+</tag>
+<tag>
+<text>CRYPTO-ANAGRAM</text>
+</tag>
+</tags>
+</question>
+<question type="shortanswer">
+<name>
+<text>Anagram Cipher Task 4: Decode the Message</text>
+</name>
+<questiontext format="html">
+<text>
+<![CDATA[ <p>The following message has been encrypted with a anagram cipher:</p> <blockquote>SEECRT</blockquote> <p>What is the original message?</p> ]]>
+</text>
+</questiontext>
+<answer fraction="100">
+<text>SECRET</text>
+<feedback>
+<text>Correct! Rearranging the letters in the message reveals "SECRET".</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text>SEECRT</text>
+<feedback>
+<text>That's the encrypted message. You need to find the original (hidden) message!</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text/>
+<feedback>
+<text>Sorry, that's not correct. Try again!</text>
+</feedback>
+</answer>
+<tags>
+<tag>
+<text>CRYPTO-SKILL</text>
+</tag>
+<tag>
+<text>CRYPTO-ANAGRAM</text>
+</tag>
+</tags>
+</question>
+<question type="shortanswer">
+<name>
+<text>Anagram Cipher Task 5: Decode the Message</text>
+</name>
+<questiontext format="html">
+<text>
+<![CDATA[ <p>The following message has been encrypted with a anagram cipher:</p> <blockquote>PLEZZU</blockquote> <p>What is the original message?</p> ]]>
+</text>
+</questiontext>
+<answer fraction="100">
+<text>PUZZLE</text>
+<feedback>
+<text>Correct! Rearranging the letters in the message reveals "PUZZLE".</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text>PLEZZU</text>
+<feedback>
+<text>That's the encrypted message. You need to find the original (hidden) message!</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text/>
+<feedback>
+<text>Sorry, that's not correct. Try again!</text>
+</feedback>
+</answer>
+<tags>
+<tag>
+<text>CRYPTO-SKILL</text>
+</tag>
+<tag>
+<text>CRYPTO-ANAGRAM</text>
+</tag>
+</tags>
+</question>
+<question type="shortanswer">
+<name>
+<text>Anagram Cipher Task 6: Decode the Message</text>
+</name>
+<questiontext format="html">
+<text>
+<![CDATA[ <p>The following message has been encrypted with a anagram cipher:</p> <blockquote>ITNKHG</blockquote> <p>What is the original message?</p> ]]>
+</text>
+</questiontext>
+<answer fraction="100">
+<text>KNIGHT</text>
+<feedback>
+<text>Correct! Rearranging the letters in the message reveals "KNIGHT".</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text>ITNKHG</text>
+<feedback>
+<text>That's the encrypted message. You need to find the original (hidden) message!</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text/>
+<feedback>
+<text>Sorry, that's not correct. Try again!</text>
+</feedback>
+</answer>
+<tags>
+<tag>
+<text>CRYPTO-SKILL</text>
+</tag>
+<tag>
+<text>CRYPTO-ANAGRAM</text>
+</tag>
+</tags>
+</question>
+<question type="shortanswer">
+<name>
+<text>Anagram Cipher Task 7: Decode the Message</text>
+</name>
+<questiontext format="html">
+<text>
+<![CDATA[ <p>The following message has been encrypted with a anagram cipher:</p> <blockquote>DROGNA</blockquote> <p>What is the original message?</p> ]]>
+</text>
+</questiontext>
+<answer fraction="100">
+<text>DRAGON</text>
+<feedback>
+<text>Correct! Rearranging the letters in the message reveals "DRAGON".</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text>DROGNA</text>
+<feedback>
+<text>That's the encrypted message. You need to find the original (hidden) message!</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text/>
+<feedback>
+<text>Sorry, that's not correct. Try again!</text>
+</feedback>
+</answer>
+<tags>
+<tag>
+<text>CRYPTO-SKILL</text>
+</tag>
+<tag>
+<text>CRYPTO-ANAGRAM</text>
+</tag>
+</tags>
+</question>
+<question type="shortanswer">
+<name>
+<text>Anagram Cipher Task 8: Decode the Message</text>
+</name>
+<questiontext format="html">
+<text>
+<![CDATA[ <p>The following message has been encrypted with a anagram cipher:</p> <blockquote>ORICTV</blockquote> <p>What is the original message?</p> ]]>
+</text>
+</questiontext>
+<answer fraction="100">
+<text>VICTOR</text>
+<feedback>
+<text>Correct! Rearranging the letters in the message reveals "VICTOR".</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text>ORICTV</text>
+<feedback>
+<text>That's the encrypted message. You need to find the original (hidden) message!</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text/>
+<feedback>
+<text>Sorry, that's not correct. Try again!</text>
+</feedback>
+</answer>
+<tags>
+<tag>
+<text>CRYPTO-SKILL</text>
+</tag>
+<tag>
+<text>CRYPTO-ANAGRAM</text>
+</tag>
+</tags>
+</question>
+<question type="shortanswer">
+<name>
+<text>Anagram Cipher Task 9: Decode the Message</text>
+</name>
+<questiontext format="html">
+<text>
+<![CDATA[ <p>The following message has been encrypted with a anagram cipher:</p> <blockquote>SERTRUEA</blockquote> <p>What is the original message?</p> ]]>
+</text>
+</questiontext>
+<answer fraction="100">
+<text>TREASURE</text>
+<feedback>
+<text>Correct! Rearranging the letters in the message reveals "TREASURE".</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text>SERTRUEA</text>
+<feedback>
+<text>That's the encrypted message. You need to find the original (hidden) message!</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text/>
+<feedback>
+<text>Sorry, that's not correct. Try again!</text>
+</feedback>
+</answer>
+<tags>
+<tag>
+<text>CRYPTO-SKILL</text>
+</tag>
+<tag>
+<text>CRYPTO-ANAGRAM</text>
+</tag>
+</tags>
+</question>
+<question type="shortanswer">
+<name>
+<text>Anagram Cipher Task 10: Decode the Message</text>
+</name>
+<questiontext format="html">
+<text>
+<![CDATA[ <p>The following message has been encrypted with a anagram cipher:</p> <blockquote>RPTYC</blockquote> <p>What is the original message?</p> ]]>
+</text>
+</questiontext>
+<answer fraction="100">
+<text>CRYPT</text>
+<feedback>
+<text>Correct! Rearranging the letters in the message reveals "CRYPT".</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text>RPTYC</text>
+<feedback>
+<text>That's the encrypted message. You need to find the original (hidden) message!</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text/>
+<feedback>
+<text>Sorry, that's not correct. Try again!</text>
+</feedback>
+</answer>
+<tags>
+<tag>
+<text>CRYPTO-SKILL</text>
+</tag>
+<tag>
+<text>CRYPTO-ANAGRAM</text>
+</tag>
+</tags>
+</question>
+<question type="shortanswer">
+<name>
+<text>Anagram Cipher Task 11: Decode the Message</text>
+</name>
+<questiontext format="html">
+<text>
+<![CDATA[ <p>The following message has been encrypted with a anagram cipher:</p> <blockquote>EINPOHX</blockquote> <p>What is the original message?</p> ]]>
+</text>
+</questiontext>
+<answer fraction="100">
+<text>PHOENIX</text>
+<feedback>
+<text>Correct! Rearranging the letters in the message reveals "PHOENIX".</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text>EINPOHX</text>
+<feedback>
+<text>That's the encrypted message. You need to find the original (hidden) message!</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text/>
+<feedback>
+<text>Sorry, that's not correct. Try again!</text>
+</feedback>
+</answer>
+<tags>
+<tag>
+<text>CRYPTO-SKILL</text>
+</tag>
+<tag>
+<text>CRYPTO-ANAGRAM</text>
+</tag>
+</tags>
+</question>
+<question type="shortanswer">
+<name>
+<text>Anagram Cipher Task 12: Decode the Message</text>
+</name>
+<questiontext format="html">
+<text>
+<![CDATA[ <p>The following message has been encrypted with a anagram cipher:</p> <blockquote>DHSAWO</blockquote> <p>What is the original message?</p> ]]>
+</text>
+</questiontext>
+<answer fraction="100">
+<text>SHADOW</text>
+<feedback>
+<text>Correct! Rearranging the letters in the message reveals "SHADOW".</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text>DHSAWO</text>
+<feedback>
+<text>That's the encrypted message. You need to find the original (hidden) message!</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text/>
+<feedback>
+<text>Sorry, that's not correct. Try again!</text>
+</feedback>
+</answer>
+<tags>
+<tag>
+<text>CRYPTO-SKILL</text>
+</tag>
+<tag>
+<text>CRYPTO-ANAGRAM</text>
+</tag>
+</tags>
+</question>
+<question type="shortanswer">
+<name>
+<text>Anagram Cipher Task 13: Decode the Message</text>
+</name>
+<questiontext format="html">
+<text>
+<![CDATA[ <p>The following message has been encrypted with a anagram cipher:</p> <blockquote>AZRIWD</blockquote> <p>What is the original message?</p> ]]>
+</text>
+</questiontext>
+<answer fraction="100">
+<text>WIZARD</text>
+<feedback>
+<text>Correct! Rearranging the letters in the message reveals "WIZARD".</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text>AZRIWD</text>
+<feedback>
+<text>That's the encrypted message. You need to find the original (hidden) message!</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text/>
+<feedback>
+<text>Sorry, that's not correct. Try again!</text>
+</feedback>
+</answer>
+<tags>
+<tag>
+<text>CRYPTO-SKILL</text>
+</tag>
+<tag>
+<text>CRYPTO-ANAGRAM</text>
+</tag>
+</tags>
+</question>
+<question type="shortanswer">
+<name>
+<text>Anagram Cipher Task 14: Decode the Message</text>
+</name>
+<questiontext format="html">
+<text>
+<![CDATA[ <p>The following message has been encrypted with a anagram cipher:</p> <blockquote>LSNAIG</blockquote> <p>What is the original message?</p> ]]>
+</text>
+</questiontext>
+<answer fraction="100">
+<text>SIGNAL</text>
+<feedback>
+<text>Correct! Rearranging the letters in the message reveals "SIGNAL".</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text>LSNAIG</text>
+<feedback>
+<text>That's the encrypted message. You need to find the original (hidden) message!</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text/>
+<feedback>
+<text>Sorry, that's not correct. Try again!</text>
+</feedback>
+</answer>
+<tags>
+<tag>
+<text>CRYPTO-SKILL</text>
+</tag>
+<tag>
+<text>CRYPTO-ANAGRAM</text>
+</tag>
+</tags>
+</question>
+<question type="shortanswer">
+<name>
+<text>Anagram Cipher Task 15: Decode the Message</text>
+</name>
+<questiontext format="html">
+<text>
+<![CDATA[ <p>The following message has been encrypted with a anagram cipher:</p> <blockquote>DOCE</blockquote> <p>What is the original message?</p> ]]>
+</text>
+</questiontext>
+<answer fraction="100">
+<text>CODE</text>
+<feedback>
+<text>Correct! Rearranging the letters in the message reveals "CODE".</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text>DOCE</text>
+<feedback>
+<text>That's the encrypted message. You need to find the original (hidden) message!</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text/>
+<feedback>
+<text>Sorry, that's not correct. Try again!</text>
+</feedback>
+</answer>
+<tags>
+<tag>
+<text>CRYPTO-SKILL</text>
+</tag>
+<tag>
+<text>CRYPTO-ANAGRAM</text>
+</tag>
+</tags>
+</question>
+<question type="shortanswer">
+<name>
+<text>Anagram Cipher Task 16: Decode the Message</text>
+</name>
+<questiontext format="html">
+<text>
+<![CDATA[ <p>The following message has been encrypted with a anagram cipher:</p> <blockquote>KLCO</blockquote> <p>What is the original message?</p> ]]>
+</text>
+</questiontext>
+<answer fraction="100">
+<text>LOCK</text>
+<feedback>
+<text>Correct! Rearranging the letters in the message reveals "LOCK".</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text>KLCO</text>
+<feedback>
+<text>That's the encrypted message. You need to find the original (hidden) message!</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text/>
+<feedback>
+<text>Sorry, that's not correct. Try again!</text>
+</feedback>
+</answer>
+<tags>
+<tag>
+<text>CRYPTO-SKILL</text>
+</tag>
+<tag>
+<text>CRYPTO-ANAGRAM</text>
+</tag>
+</tags>
+</question>
+<question type="shortanswer">
+<name>
+<text>Anagram Cipher Task 17: Decode the Message</text>
+</name>
+<questiontext format="html">
+<text>
+<![CDATA[ <p>The following message has been encrypted with a anagram cipher:</p> <blockquote>OODR</blockquote> <p>What is the original message?</p> ]]>
+</text>
+</questiontext>
+<answer fraction="100">
+<text>DOOR</text>
+<feedback>
+<text>Correct! Rearranging the letters in the message reveals "DOOR".</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text>OODR</text>
+<feedback>
+<text>That's the encrypted message. You need to find the original (hidden) message!</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text/>
+<feedback>
+<text>Sorry, that's not correct. Try again!</text>
+</feedback>
+</answer>
+<tags>
+<tag>
+<text>CRYPTO-SKILL</text>
+</tag>
+<tag>
+<text>CRYPTO-ANAGRAM</text>
+</tag>
+</tags>
+</question>
+<question type="shortanswer">
+<name>
+<text>Anagram Cipher Task 18: Decode the Message</text>
+</name>
+<questiontext format="html">
+<text>
+<![CDATA[ <p>The following message has been encrypted with a anagram cipher:</p> <blockquote>KYE</blockquote> <p>What is the original message?</p> ]]>
+</text>
+</questiontext>
+<answer fraction="100">
+<text>KEY</text>
+<feedback>
+<text>Correct! Rearranging the letters in the message reveals "KEY".</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text>KYE</text>
+<feedback>
+<text>That's the encrypted message. You need to find the original (hidden) message!</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text/>
+<feedback>
+<text>Sorry, that's not correct. Try again!</text>
+</feedback>
+</answer>
+<tags>
+<tag>
+<text>CRYPTO-SKILL</text>
+</tag>
+<tag>
+<text>CRYPTO-ANAGRAM</text>
+</tag>
+</tags>
+</question>
+<question type="shortanswer">
+<name>
+<text>Anagram Cipher Task 19: Decode the Message</text>
+</name>
+<questiontext format="html">
+<text>
+<![CDATA[ <p>The following message has been encrypted with a anagram cipher:</p> <blockquote>PAM</blockquote> <p>What is the original message?</p> ]]>
+</text>
+</questiontext>
+<answer fraction="100">
+<text>MAP</text>
+<feedback>
+<text>Correct! Rearranging the letters in the message reveals "MAP".</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text>PAM</text>
+<feedback>
+<text>That's the encrypted message. You need to find the original (hidden) message!</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text/>
+<feedback>
+<text>Sorry, that's not correct. Try again!</text>
+</feedback>
+</answer>
+<tags>
+<tag>
+<text>CRYPTO-SKILL</text>
+</tag>
+<tag>
+<text>CRYPTO-ANAGRAM</text>
+</tag>
+</tags>
+</question>
+<question type="shortanswer">
+<name>
+<text>Anagram Cipher Task 20: Decode the Message</text>
+</name>
+<questiontext format="html">
+<text>
+<![CDATA[ <p>The following message has been encrypted with a anagram cipher:</p> <blockquote>TSEUQ</blockquote> <p>What is the original message?</p> ]]>
+</text>
+</questiontext>
+<answer fraction="100">
+<text>QUEST</text>
+<feedback>
+<text>Correct! Rearranging the letters in the message reveals "QUEST".</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text>TSEUQ</text>
+<feedback>
+<text>That's the encrypted message. You need to find the original (hidden) message!</text>
+</feedback>
+</answer>
+<answer fraction="0">
+<text/>
+<feedback>
+<text>Sorry, that's not correct. Try again!</text>
+</feedback>
+</answer>
+<tags>
+<tag>
+<text>CRYPTO-SKILL</text>
+</tag>
+<tag>
+<text>CRYPTO-ANAGRAM</text>
+</tag>
+</tags>
+</question>
+</quiz>

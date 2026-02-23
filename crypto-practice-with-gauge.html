@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Skill Practice: Proportional Relationships</title>
+  <title>Skill Practice: Anagram Cipher</title>
   <script src="js/cryptojs_v3.1.2.js"></script>
   <script src="js/xAPIWrapper.js"></script>
   <script src="js/jimsxapiwrapper.js"></script>
@@ -62,17 +62,18 @@
 <body>
   <div class="split-container">
     <div class="left-pane">
-      <h3>Practice: Analyzing Proportional Relationships</h3>
+      <h3>Practice: Anagram Cipher</h3>
       <div id="divBackground">
         <div id="divActivity"><button id="nextitembutton">Start</button></div>
 
-        <!-- Three items with proportional relationship problems -->
+        <!-- Five items from crypto.xml -->
         <div id="item001.html" style="visibility: hidden">
             <div id="learningActivity">
               <div id="divStimulus">
-                <p>Solve for <i>r</i>.   (enter answer as a fraction)</p>
-                <p><span class="frac"><sup>4</sup><span>&frasl;</span><sub><i>r</i></sub></span>&nbsp;=&nbsp;<span class="frac"><sup>5</sup><span>&frasl;</span><sub>7</sub></span></p>
-                <p><i>r</i>&nbsp;=&nbsp;<input id="response" type="text"></input></p>
+                <p>The following message has been encrypted with an anagram cipher:</p>
+                <blockquote>PPAEL</blockquote>
+                <p>What is the original message?</p>
+                <p><input id="response" type="text"></input></p>
                 <button id="checkResponseButton" onclick="check()">Check Answer</button>
                 <p>Stuck? <button id="hintButton" onclick="nextHint()">Get a hint</button></p>
               </div>
@@ -81,14 +82,13 @@
             </div>
         </div>
         
-        <!-- Similar structure for other items -->
         <div id="item002.html" style="visibility: hidden">
-            <!-- Similar structure with different values -->
             <div id="learningActivity">
               <div id="divStimulus">
-                <p>Solve for <i>r</i>.   (enter answer as a fraction)</p>
-                <p><span class="frac"><sup>4</sup><span>&frasl;</span><sub><i>r</i></sub></span>&nbsp;=&nbsp;<span class="frac"><sup>3</sup><span>&frasl;</span><sub>10</sub></span></p>
-                <p><i>r</i>&nbsp;=&nbsp;<input id="response" type="text"></input></p>
+                <p>The following message has been encrypted with an anagram cipher:</p>
+                <blockquote>NAIBR</blockquote>
+                <p>What is the original message?</p>
+                <p><input id="response" type="text"></input></p>
                 <button id="checkResponseButton" onclick="check()">Check Answer</button>
                 <p>Stuck? <button id="hintButton" onclick="nextHint()">Get a hint</button></p>
               </div>
@@ -100,9 +100,40 @@
         <div id="item003.html" style="visibility: hidden">
             <div id="learningActivity">
               <div id="divStimulus">
-                <p>Solve for <i>r</i>.   (enter answer as a fraction)</p>
-                <p><span class="frac"><sup>4</sup><span>&frasl;</span><sub><i>r</i></sub></span>&nbsp;=&nbsp;<span class="frac"><sup>5</sup><span>&frasl;</span><sub>9</sub></span></p>
-                <p><i>r</i>&nbsp;=&nbsp;<input id="response" type="text"></input></p>
+                <p>The following message has been encrypted with an anagram cipher:</p>
+                <blockquote>EHPIRC</blockquote>
+                <p>What is the original message?</p>
+                <p><input id="response" type="text"></input></p>
+                <button id="checkResponseButton" onclick="check()">Check Answer</button>
+                <p>Stuck? <button id="hintButton" onclick="nextHint()">Get a hint</button></p>
+              </div>
+              <div id="feedback"></div>
+              <div id="divHints"></div>
+            </div>
+        </div>
+
+        <div id="item004.html" style="visibility: hidden">
+            <div id="learningActivity">
+              <div id="divStimulus">
+                <p>The following message has been encrypted with an anagram cipher:</p>
+                <blockquote>SEECRT</blockquote>
+                <p>What is the original message?</p>
+                <p><input id="response" type="text"></input></p>
+                <button id="checkResponseButton" onclick="check()">Check Answer</button>
+                <p>Stuck? <button id="hintButton" onclick="nextHint()">Get a hint</button></p>
+              </div>
+              <div id="feedback"></div>
+              <div id="divHints"></div>
+            </div>
+        </div>
+
+        <div id="item005.html" style="visibility: hidden">
+            <div id="learningActivity">
+              <div id="divStimulus">
+                <p>The following message has been encrypted with an anagram cipher:</p>
+                <blockquote>PLEZZU</blockquote>
+                <p>What is the original message?</p>
+                <p><input id="response" type="text"></input></p>
                 <button id="checkResponseButton" onclick="check()">Check Answer</button>
                 <p>Stuck? <button id="hintButton" onclick="nextHint()">Get a hint</button></p>
               </div>
@@ -118,8 +149,8 @@
       <div class="gauge-container">
         <percent-gauge id="skill-gauge" gauge-band-color="green" gauge-value-decimal="0.0"></percent-gauge>
       </div>
-      <div class="skill-label">CCSS.MATH.CONTENT.7.RP.A.2</div>
-      <div class="skill-description">Recognize and represent proportional relationships between quantities.</div>
+      <div class="skill-label">CRYPTO-ANAGRAM</div>
+      <div class="skill-description">Decode an anagram cipher by rearranging letters.</div>
     </div>
   </div>
 
@@ -139,7 +170,7 @@
     };
 
     // Fixed skill ID for this practice set
-    const SKILL_ID = "https://example.org/CCSS.MATH.CONTENT.7.RP.A.2";
+    const SKILL_ID = "https://example.org/crypto/anagram";
 
     // Initialize xAPI configuration
     const xapiConf = {
@@ -152,8 +183,8 @@
     const feedbackObjArray = [];
     var numHints = 0;
     var currentHint = 0;
-    var currentItemArrayPos = 0;
-    const itemArray = ["item001.html","item002.html","item003.html"];
+    var currentItemArrayPos = -1;
+    const itemArray = ["item001.html","item002.html","item003.html","item004.html","item005.html"];
 
     function nextItem(){
       feedbackObjArray.splice(0, feedbackObjArray.length);
@@ -164,14 +195,19 @@
       // Set up feedback for each item
       switch(currentItemArrayPos){
         case 0:
-          feedbackObjArray.push({match: "28/5", matchtype:"exact", feedback:"Correct! <button onclick='nextItem()'>Next Question</button>"});
-          feedbackObjArray.push({match: ".", matchtype:"substring", feedback:"Enter the answer as a fraction rather than a decimal number."});
+          feedbackObjArray.push({match: "APPLE", matchtype:"exact", feedback:"Correct! Rearranging the letters reveals APPLE. <button onclick='nextItem()'>Next Question</button>"});
           numHints = 5; currentHint = 0; break;
         case 1:
-          feedbackObjArray.push({match: "40/3", matchtype:"exact", feedback:"Correct! <button onclick='nextItem()'>Next Question</button>"});
+          feedbackObjArray.push({match: "BRAIN", matchtype:"exact", feedback:"Correct! Rearranging the letters reveals BRAIN. <button onclick='nextItem()'>Next Question</button>"});
           numHints = 5; currentHint = 0; break;
         case 2:
-          feedbackObjArray.push({match: "36/5", matchtype:"exact", feedback:"Correct! <button onclick='nextItem()'>Next Question</button>"});
+          feedbackObjArray.push({match: "CIPHER", matchtype:"exact", feedback:"Correct! Rearranging the letters reveals CIPHER. <button onclick='nextItem()'>Next Question</button>"});
+          numHints = 5; currentHint = 0; break;
+        case 3:
+          feedbackObjArray.push({match: "SECRET", matchtype:"exact", feedback:"Correct! Rearranging the letters reveals SECRET. <button onclick='nextItem()'>Next Question</button>"});
+          numHints = 5; currentHint = 0; break;
+        case 4:
+          feedbackObjArray.push({match: "PUZZLE", matchtype:"exact", feedback:"Correct! Rearranging the letters reveals PUZZLE. <button onclick='nextItem()'>Next Question</button>"});
           numHints = 5; currentHint = 0; break;
       }
     }
@@ -243,10 +279,11 @@
     function check(){
       var success = false;
       var responseValueText = (document.getElementById('response') || {value:''}).value;
+      var normalizedResponseValue = responseValueText.trim().toUpperCase();
       var fb = document.getElementById('feedback');
       if (fb) fb.innerHTML = 'Try again.';
       for (let i=0; i<feedbackObjArray.length; i++){
-        if (feedbackObjArray[i].match == responseValueText){
+        if (feedbackObjArray[i].match == normalizedResponseValue){
           if (fb) fb.innerHTML = feedbackObjArray[i].feedback;
           if (i==0) success = true;
         }
