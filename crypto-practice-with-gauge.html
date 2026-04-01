@@ -310,11 +310,11 @@
         }
         const [authId, authSecret] = CONFIG.xapi.credentials.split(':');
         const params = {
-          competency_id: SKILL_ID,
-          user_id: userId,
-          lrs_url: CONFIG.xapi.endpoint,
-          auth_id: authId,
-          auth_secret: authSecret
+          competencyID: SKILL_ID,
+          userID: userId,
+          lrsURL: CONFIG.xapi.endpoint,
+          authID: authId,
+          authSecret: authSecret
         };
 
         console.log('Params:' + JSON.stringify(params));

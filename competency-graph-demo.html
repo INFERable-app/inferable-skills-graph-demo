@@ -774,13 +774,13 @@
             console.log('Using actor for BKT predictions:', { actor, userId });
             
             // Split credentials into auth_id and auth_secret
-            const [authId, authSecret] = CONFIG.xapi.credentials.split(':');
+            const [authID, authSecret] = CONFIG.xapi.credentials.split(':');
             const params = {
-              competency_id: node['@id'],
-              user_id: userId,
-              lrs_url: CONFIG.xapi.endpoint,
-              auth_id: authId,
-              auth_secret: authSecret
+              competencyID: node['@id'],
+              userID: userId,
+              lrsURL: CONFIG.xapi.endpoint,
+              authID,
+              authSecret
             };
             // Build GET URL with query parameters (no body)
             const url = `${CONFIG.bkt.endpoint}?${new URLSearchParams(params).toString()}`;
